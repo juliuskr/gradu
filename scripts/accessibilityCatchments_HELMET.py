@@ -10,22 +10,33 @@ Author: Julius Krötzl - 3.2.2019
 import pandas as pd
 import numpy as np
 
+# Luetaan matka-ajat
+#fppmatrix = '/Users/juliuskrotzl/OneDrive/Gradu/GIS/nyky_pyora_pysakointi1min_12kmh.csv'
+#ttmatrix = pd.read_csv(fppmatrix, sep=',')
+#
+#fpttmatrix = '/Users/juliuskrotzl/OneDrive/Gradu/GIS/2030_aht_auto_korj_pysakointi2min.csv'
+#ttmatrix = pd.read_csv(fpttmatrix, sep=',')
+
+# Read PT travel times 2017
+#fpttmatrix = '/Users/juliuskrotzl/OneDrive/Gradu/GIS/nyky_aht_jl_transformed.txt'
+#ttmatrix = pd.read_csv(fpttmatrix, delim_whitespace=True)
+
+# Read car travel times 2017
+#fpttmatrix = '/Users/juliuskrotzl/OneDrive/Gradu/GIS/nyky_aht_auto_pysakointi2min.csv'
+#ttmatrix = pd.read_csv(fpttmatrix, sep=',')
+
+## Luetaan 2017 maankäyttö
+fplanduse = '/Users/juliuskrotzl/OneDrive/Gradu/GIS/output_korjattu/landuse17.csv'
+lutable = pd.read_csv(fplanduse,sep=',', skiprows=0)
+
+## Luetaan 2030 maankäyttö
+#fplanduse = '/Users/juliuskrotzl/OneDrive/Gradu/GIS/output_korjattu/landuse.csv'
+#lutable = pd.read_csv(fplanduse,sep=',', skiprows=0)
 
 # Työvoiman saavutettavuus joukkoliikenteellä: Kuinka paljon asukkaita saavuttaa alueen 30 minuutissa nykyisin?
 
 def createCatchmentsLoglog(travelmode, year, landuse, maxtraveltime, datafolder, a, b):
-
-    # Luetaan matka-ajat
-#    fpttmatrix = '/Users/juliuskrotzl/OneDrive/Gradu/GIS/2030_aht_auto_korj_pysakointi2min.csv'
-#    ttmatrix = pd.read_csv(fpttmatrix, sep=',')
-    
-    fppmatrix = '/Users/juliuskrotzl/OneDrive/Gradu/GIS/nyky_pyora_pysakointi1min_12kmh.csv'
-    ttmatrix = pd.read_csv(fppmatrix, sep=',')
-    
-    # Luetaan väestö- tai työpaikkamäärät
-    fplanduse = '/Users/juliuskrotzl/OneDrive/Gradu/GIS/output_korjattu/landuse.csv'
-    lutable = pd.read_csv(fplanduse,sep=',', skiprows=0)
-        
+      
     # Yhdistetään maankäyttödata matka-aikataulukon viimeiseksi sarakkeeksi ja luodaan siitä uusi merged-taulukko
     merged = ttmatrix.merge(lutable[['id', landuse]],how='left')
     
@@ -74,12 +85,12 @@ def gaussianCatchments(travelmode, year, landuse, maxtraveltime, z, datafolder):
 #    fpttmatrix = '/Users/juliuskrotzl/OneDrive/Gradu/GIS/2030_aht_jl_korj_transp.txt'
 #    ttmatrix = pd.read_csv(fpttmatrix, delim_whitespace=True)
     
-    fppmatrix = '/Users/juliuskrotzl/OneDrive/Gradu/GIS/nyky_pyora_pysakointi1min_12kmh.csv'
-    ttmatrix = pd.read_csv(fppmatrix, sep=',')
-    
-    # Luetaan väestö- tai työpaikkamäärät
-    fplanduse = '/Users/juliuskrotzl/OneDrive/Gradu/GIS/opiskelupaikat_2015.csv'
-    lutable = pd.read_csv(fplanduse, skiprows=0, sep=',')
+#    fppmatrix = '/Users/juliuskrotzl/OneDrive/Gradu/GIS/nyky_pyora_pysakointi1min_12kmh.csv'
+#    ttmatrix = pd.read_csv(fppmatrix, sep=',')
+#    
+#    # Luetaan väestö- tai työpaikkamäärät
+#    fplanduse = '/Users/juliuskrotzl/OneDrive/Gradu/GIS/opiskelupaikat_2015.csv'
+#    lutable = pd.read_csv(fplanduse, skiprows=0, sep=',')
         
     # Yhdistetään maankäyttödata matka-aikataulukon viimeiseksi sarakkeeksi ja luodaan siitä uusi merged-taulukko
     merged = ttmatrix.merge(lutable[['id', landuse]],how='left')
